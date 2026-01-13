@@ -1,40 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Event Manager Application
 
-## Getting Started
+This is a full-stack **Event Management Web Application** built with **Next.js**, **MongoDB**, and **NextAuth.js**.  
+The platform allows users to browse events, confirm participation, and allows organizers to create, edit, and delete events.
 
-First, run the development server:
+The project was developed for academic purposes and follows modern web development practices.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Authentication
+- User authentication using **NextAuth.js**
+- Login and Signup with credentials
+- Role-based access:
+  - **Attendee**
+  - **Organizer**
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+---
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+### Events
+- Browse all available events
+- View event details:
+  - Title
+  - Description
+  - Date
+  - Location
+  - Category
+  - Price
+  - Available seats
+- Search and filter events by:
+  - Category
+  - Date (upcoming, ongoing, canceled)
+  - Price
+- Mark events as **Favorites**
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+### Participation
+- Users can confirm participation to events
+- Events become **Sold Out** automatically when capacity is reached
+- Participation is disabled when no seats are available
+- Users can see events they participated in under **“My Tickets”**
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+### Organizer Dashboard
+- Organizers can:
+  - Add new events
+  - Edit their own events
+  - Delete their own events
+- Only the event organizer is allowed to edit or delete an event
+- Organizers can see the number of attendees for each event
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Technologies Used
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Frontend
+- **Next.js** (Pages Router)
+- **React**
+- **CSS Modules**
+- Responsive UI
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+### Backend
+- **Next.js API Routes**
+- **MongoDB** with **Mongoose**
+- **NextAuth.js** for authentication
+
+---
+
+## Project Structure
+
