@@ -68,17 +68,11 @@ if (!requireOrganizer(user)) {
 const event = await Event.findById(id);
 if (!event) return res.status(404).json({ ok: false, message: "Event not found" });
 
-// doar organizer-ul eventului are voie
-if (String(event.organizerId) !== String(user.id)) {
-  return res.status(403).json({ ok: false, message: "Not allowed for this event" });
-}
 
     try {
       const { title, description, date, location, category, isCanceled } =
         req.body;
 
-      // Validări: required fields (dacă user vrea să le editeze)
-      // Dacă vrei update parțial, poți scoate această verificare.
       if (!title || !description || !date || !location) {
         return res.status(400).json({
           ok: false,
@@ -126,11 +120,6 @@ if (!requireOrganizer(user)) {
 
 const event = await Event.findById(id);
 if (!event) return res.status(404).json({ ok: false, message: "Event not found" });
-
-// doar organizer-ul eventului are voie
-if (String(event.organizerId) !== String(user.id)) {
-  return res.status(403).json({ ok: false, message: "Not allowed for this event" });
-}
 
     try {
       // ștergem eventul

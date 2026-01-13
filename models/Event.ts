@@ -10,6 +10,9 @@ export interface IEvent extends mongoose.Document {
   isCanceled: boolean;
   createdAt: Date;
   updatedAt: Date;
+  capacity:number;
+  price:number;
+  imageUrl?:string;
 }
 
 const MAX_DESCRIPTION_LENGTH = 800;
@@ -53,7 +56,23 @@ const EventSchema = new Schema<IEvent>(
       type: Boolean,
       default: false,
     },
+    price: {
+  type: Number,
+  default: 0,
+  min: 0,
+},
+capacity: {
+  type: Number,
+  default: 0,
+  min: 0,
+},
+imageUrl: {
+  type: String,
+  default: "",
+  trim: true,
+},
   },
+  
   { timestamps: true }
 );
 

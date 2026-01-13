@@ -1,0 +1,64 @@
+.wrapper {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+.card {
+  background: #ffffff;
+  padding: 64px 80px;
+  border-radius: 28px;
+  text-align: center;
+  max-width: 720px;
+  width: 90%;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+}
+
+.logo {
+  font-weight: 800;
+  color: #4f6df5;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 48px;
+  font-weight: 900;
+  margin-bottom: 20px;
+  color: #0f172a;
+}
+
+.subtitle {
+  color: #64748b;
+  font-size: 16px;
+  margin-bottom: 40px;
+}
+
+.button {
+  background: linear-gradient(135deg, #4f6df5, #3b82f6);
+  border: none;
+  color: white;
+  padding: 18px 48px;
+  border-radius: 999px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 10px 30px rgba(79, 109, 245, 0.4);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px rgba(79, 109, 245, 0.55);
+}
+.card:hover .img {
+  transform: scale(1.04);
+  transition: transform 0.25s ease;
+}
+.img {
+  transition: transform 0.25s ease;
+}
+

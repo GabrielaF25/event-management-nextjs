@@ -1,69 +1,22 @@
 import mongoose, { Schema, models, model } from "mongoose";
 
-export interface IEvent extends mongoose.Document {
-  title: string;
-  description: string;
-  date: Date;
-  location: string;
-  category: string;
-  organizerId: mongoose.Types.ObjectId;
-  isCanceled: boolean;
+export interface IParticipation extends mongoose.Document {
+  eventId: mongoose.Types.ObjectId;
+  userId: mongoose.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
 }
 
-const MAX_DESCRIPTION_LENGTH = 800;
-
-const EventSchema = new Schema<IEvent>(
+const ParticipationSchema = new Schema<IParticipation>(
   {
-    title: {
-      type: String,
-      required: true,
-      trim: true,
-      maxlength: 120,
-    },
-    description: {
-      type: String,
-      required: true,
-      trim: true,
-      maxlength: MAX_DESCRIPTION_LENGTH,
-    },
-    date: {
-      type: Date,
-      required: true,
-    },
-    location: {
-      type: String,
-      required: true,
-      trim: true,
-      maxlength: 120,
-    },
-    category: {
-      type: String,
-      default: "General",
-      trim: true,
-      maxlength: 50,
-    },
-    organizerId: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-    isCanceled: {
-      type: Boolean,
-      default: false,
-    },
+    eventId: { type: Schema.Types.ObjectId, ref: "Event", required: true },
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
   },
   { timestamps: true }
 );
 
-// index-uri utile pentru search & filters
-EventSchema.index({ title: "text", location: "text" });
-EventSchema.index({ date: 1 });
-EventSchema.index({ category: 1 });
+// un user nu poate participa de 2 ori la același event
+ParticipationSchema.index({ eventId: 1, userId: 1 }, { unique: true });
 
-export const EVENT_LIMITS = {
-  MAX_DESCRIPTION_LENGTH,
-};
-
-export default models.Event || model<IEvent>("Event", EventSchema);
+export default models.Participation ||
+  model<IParticipation>("Participation", ParticipationSchema);

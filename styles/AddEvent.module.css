@@ -1,0 +1,95 @@
+.wrapper {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+.card {
+  width: 720px;
+  max-width: 100%;
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 28px;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.35);
+}
+
+.title {
+  margin: 0 0 18px;
+  font-size: 26px;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.form {
+  display: grid;
+  gap: 14px;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.input, .textarea, .select {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  background: #f8fafc;
+  font-size: 15px;
+  outline: none;
+}
+
+.textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.input:focus, .textarea:focus, .select:focus {
+  border-color: #4f6df5;
+  box-shadow: 0 0 0 4px rgba(79,109,245,0.15);
+  background: #fff;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.btnPrimary {
+  flex: 1;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 16px;
+  cursor: pointer;
+  font-weight: 900;
+  color: #fff;
+  background: linear-gradient(135deg, #4f6df5, #3b82f6);
+  box-shadow: 0 12px 30px rgba(79,109,245,0.35);
+}
+
+.btnPrimary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btnGhost {
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  padding: 14px 16px;
+  cursor: pointer;
+  font-weight: 900;
+  background: #fff;
+  color: #0f172a;
+}
+
+@media (max-width: 700px) {
+  .grid2 { grid-template-columns: 1fr; }
+}

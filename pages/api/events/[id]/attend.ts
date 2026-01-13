@@ -52,6 +52,13 @@ export default async function handler(
 
     // Creează participarea (indexul unique previne dublarea)
     try {
+      // dacă ai capacity în Event
+const cap = typeof (event as any).capacity === "number" ? (event as any).capacity : 0;
+const current = await Participation.countDocuments({ eventId: event._id });
+
+if (cap > 0 && current >= cap) {
+  return res.status(409).json({ ok: false, message: "No seats left" });
+}
       await Participation.create({
         eventId: new mongoose.Types.ObjectId(id),
         userId: new mongoose.Types.ObjectId(userId),

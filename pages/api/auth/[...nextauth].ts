@@ -56,7 +56,7 @@ export const authOptions: NextAuthOptions = {
     },
   },
   pages: {
-    signIn: "/login", // îl facem mai târziu pe frontend
+    signIn: "/login",
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
