@@ -48,7 +48,7 @@ if (req.method === "GET") {
 }
 
   // =====================
-  // POST /api/events (TEMPORAR fără auth)
+  // POST /api/events
   // =====================
   if (req.method === "POST") {
         const session = await requireSession(req, res);

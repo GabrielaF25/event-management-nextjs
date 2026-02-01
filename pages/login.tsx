@@ -6,14 +6,12 @@ import { getSession } from "next-auth/react";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { status } = useSession(); // "authenticated" | "unauthenticated" | "loading"
+  const { status } = useSession(); 
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState(false);
-
-  // Dacă ești deja logată, trimite direct la dashboard
   useEffect(() => {
     if (status === "authenticated") router.replace("/explore");
   }, [status, router]);
@@ -27,7 +25,6 @@ export default function LoginPage() {
       redirect: false,
       email,
       password,
-      // callbackUrl: "/explore" // opțional
     });
 
     setLoading(false);

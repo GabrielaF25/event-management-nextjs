@@ -28,17 +28,17 @@ export default async function handler(
   await dbConnect();
 
   try {
-    // verificăm că eventul există
+    
     const event = await Event.findById(id).select("_id").lean();
     if (!event) {
       return res.status(404).json({ ok: false, message: "Event not found" });
     }
 
-    // participations -> populate user (dar fără passwordHash!)
+  
     const participations = await Participation.find({
       eventId: new mongoose.Types.ObjectId(id),
     })
-      .populate("userId", "name email") // selectăm doar name/email
+      .populate("userId", "name email") 
       .lean();
 
     const participants = participations

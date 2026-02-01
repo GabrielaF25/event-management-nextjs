@@ -43,7 +43,7 @@ export default function ExplorePage() {
 
   const [dateFilter, setDateFilter] = useState<"VIITOARE" | "TOATE">("VIITOARE");
   const [priceFilter, setPriceFilter] = useState<
-    "TOATE" | "0-50" | "50-200" | "200+"
+    "TOATE" | "0-50" | "100-150" | "150-200" | "200+"
   >("TOATE");
   const [categoryFilter, setCategoryFilter] = useState<string>("TOATE");
 
@@ -74,13 +74,10 @@ const isSoldOut = (ev: EventT) => {
   const cap = typeof ev.capacity === "number" ? ev.capacity : 0;
   const taken = typeof ev.attendeesCount === "number" ? ev.attendeesCount : 0;
 
-  // dacă există capacity: sold out când taken >= cap
   if (cap > 0) return taken >= cap;
 
-  // dacă capacity e 0 => consideră sold out (no seats)
   if (cap === 0) return true;
 
-  // fallback
   return false;
 };
 
@@ -97,7 +94,6 @@ const attendEvent = async (eventId: string) => {
       throw new Error(data?.message || "Nu s-a putut confirma participarea");
     }
 
-    // update local: crește count pentru eventul respectiv (fără refetch)
     setEvents((prev) =>
       prev.map((e) =>
         e._id === eventId
@@ -119,7 +115,6 @@ const attendEvent = async (eventId: string) => {
     const now = new Date();
     let list = [...events];
 
-    // ---------- TAB FILTERS ----------
     if (tab === "ANULAT") {
       list = list.filter((e) => e.isCanceled);
     } else if (tab === "VIITOR") {
@@ -127,7 +122,6 @@ const attendEvent = async (eventId: string) => {
         (e) => e.date && new Date(e.date) > now && !e.isCanceled
       );
     } else if (tab === "IN_DERULARE") {
-      // "în derulare" = azi (fallback dacă nu ai interval start-end)
       list = list.filter((e) => {
         if (!e.date || e.isCanceled) return false;
         const d = new Date(e.date);
@@ -141,15 +135,13 @@ const attendEvent = async (eventId: string) => {
         list = list.filter((e) => {
     if (e.isCanceled) return false;
 
-    // dacă ai flag explicit
     if (e.soldOut === true) return true;
 
-    // dacă ai capacitate (0 => sold out)
     if (typeof e.capacity === "number") {
-      // fără attendeesCount: capacity 0 => sold out
+  
       if (e.capacity === 0) return true;
 
-      // cu attendeesCount: sold out când sunt pline
+  
       if (typeof e.attendeesCount === "number") {
         return e.attendeesCount >= e.capacity;
       }
@@ -174,7 +166,8 @@ const attendEvent = async (eventId: string) => {
         .filter((e) => {
           const p = e.price as number;
           if (priceFilter === "0-50") return p >= 0 && p <= 50;
-          if (priceFilter === "50-200") return p > 50 && p <= 200;
+          if (priceFilter === "100-150") return p > 100 && p <= 150;
+          if (priceFilter === "150-200") return p > 150 && p <= 200;
           if (priceFilter === "200+") return p > 200;
           return true;
         });
@@ -251,7 +244,8 @@ const attendEvent = async (eventId: string) => {
             >
               <option value="TOATE">PREȚ</option>
               <option value="0-50">0 - 50</option>
-              <option value="50-200">50 - 200</option>
+              <option value="100-150">100 - 150</option>
+              <option value="150-200">150 - 200</option>
               <option value="200+">200+</option>
             </select>
 
@@ -344,7 +338,7 @@ const attendEvent = async (eventId: string) => {
       const taken = typeof ev.attendeesCount === "number" ? ev.attendeesCount : 0;
       const cap = ev.capacity;
       const remaining = Math.max(0, cap - taken);
-      return <>Locuri: {remaining}/{cap}</>;
+      return <>Locuri: {taken}/{cap}</>;
     })()}
   </div>
 )}

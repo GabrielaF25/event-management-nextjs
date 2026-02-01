@@ -41,7 +41,6 @@ export default function ExplorePage() {
   >("TOATE");
 
   const [favorites, setFavorites] = useState<Record<string, boolean>>({});
-  const [showFavOnly, setShowFavOnly] = useState(false);
 
   const [dateFilter, setDateFilter] = useState<"VIITOARE" | "TOATE">("VIITOARE");
   const [priceFilter, setPriceFilter] = useState<
@@ -70,47 +69,6 @@ export default function ExplorePage() {
   const toggleFav = (id: string) => {
     setFavorites((prev) => ({ ...prev, [id]: !prev[id] }));
   };
-const isSoldOut = (ev: EventT) => {
-  if (ev.isCanceled) return true;
-
-  const cap = typeof ev.capacity === "number" ? ev.capacity : 0;
-  const taken = typeof ev.attendeesCount === "number" ? ev.attendeesCount : 0;
-
-  // dacă există capacity: sold out când taken >= cap
-  if (cap > 0) return taken >= cap;
-
-  // dacă capacity e 0 => consideră sold out (no seats)
-  if (cap === 0) return true;
-
-  // fallback
-  return false;
-};
-
-const attendEvent = async (eventId: string) => {
-  try {
-    const res = await fetch(`/api/events/${eventId}/attend`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    });
-
-    const data = await res.json();
-
-    if (!res.ok || data?.ok === false) {
-      throw new Error(data?.message || "Nu s-a putut confirma participarea");
-    }
-
-    // update local: crește count pentru eventul respectiv (fără refetch)
-    setEvents((prev) =>
-      prev.map((e) =>
-        e._id === eventId
-          ? { ...e, attendeesCount: data.attendeesCount }
-          : e
-      )
-    );
-  } catch (e: any) {
-    alert(e.message);
-  }
-};
 
   const favCount = useMemo(
     () => Object.values(favorites).filter(Boolean).length,
@@ -129,7 +87,7 @@ const attendEvent = async (eventId: string) => {
         (e) => e.date && new Date(e.date) > now && !e.isCanceled
       );
     } else if (tab === "IN_DERULARE") {
-      // "în derulare" = azi (fallback dacă nu ai interval start-end)
+    
       list = list.filter((e) => {
         if (!e.date || e.isCanceled) return false;
         const d = new Date(e.date);
@@ -143,15 +101,15 @@ const attendEvent = async (eventId: string) => {
         list = list.filter((e) => {
     if (e.isCanceled) return false;
 
-    // dacă ai flag explicit
+   
     if (e.soldOut === true) return true;
 
-    // dacă ai capacitate (0 => sold out)
+    
     if (typeof e.capacity === "number") {
-      // fără attendeesCount: capacity 0 => sold out
+    
       if (e.capacity === 0) return true;
 
-      // cu attendeesCount: sold out când sunt pline
+     
       if (typeof e.attendeesCount === "number") {
         return e.attendeesCount >= e.capacity;
       }
@@ -192,12 +150,9 @@ const attendEvent = async (eventId: string) => {
     }
 
     // ---------- FAVORITES ONLY ----------
-    if (showFavOnly) {
-      list = list.filter((e) => favorites[e._id]);
-    }
 
     return list;
-  }, [events, tab, dateFilter, priceFilter, categoryFilter, showFavOnly, favorites]);
+  }, [events, tab, dateFilter, priceFilter, categoryFilter, favorites]);
 
 const handleDelete = async (id: string) => {
   if (!confirm("Sigur vrei să ștergi evenimentul?")) return;

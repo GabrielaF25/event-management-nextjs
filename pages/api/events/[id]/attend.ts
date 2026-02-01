@@ -50,9 +50,8 @@ export default async function handler(
       return res.status(400).json({ ok: false, message: "Event is canceled" });
     }
 
-    // Creează participarea (indexul unique previne dublarea)
+  
     try {
-      // dacă ai capacity în Event
 const cap = typeof (event as any).capacity === "number" ? (event as any).capacity : 0;
 const current = await Participation.countDocuments({ eventId: event._id });
 

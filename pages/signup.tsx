@@ -25,9 +25,6 @@ export default function SignupPage() {
     setLoading(true);
 
     try {
-      // IMPORTANT: folosește ruta ta reală:
-      // dacă fișierul e pages/api/auth/signup.ts -> endpoint = "/api/auth/signup"
-      // dacă e pages/api/signup.ts -> endpoint = "/api/signup"
       const res = await fetch("/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -41,7 +38,6 @@ export default function SignupPage() {
         return;
       }
 
-      // la succes -> mergi la login
       router.push("/login");
     } catch (err: any) {
       setError(err?.message || "Signup failed");

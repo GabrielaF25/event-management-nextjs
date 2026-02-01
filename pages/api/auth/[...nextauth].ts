@@ -27,7 +27,7 @@ export const authOptions: NextAuthOptions = {
         const ok = await bcrypt.compare(password, user.passwordHash);
         if (!ok) return null;
 
-        // ceea ce returnezi aici ajunge în token/session
+        
         return {
           id: String(user._id),
           name: user.name,
@@ -39,7 +39,7 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      // la login, `user` e disponibil; îl copiem în token
+     
       if (user) {
         token.id = (user as any).id;
         token.role = (user as any).role;
@@ -47,7 +47,7 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      // adăugăm id + role în session.user
+    
       if (session.user) {
         (session.user as any).id = token.id;
         (session.user as any).role = token.role;
